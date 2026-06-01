@@ -1,0 +1,314 @@
+:root {
+  --bg-color: #fdfaf6; /* Very soft warm cream */
+  --bg-gradient-start: #fdfaf6;
+  --bg-gradient-end: #eae0f4; /* A deeper pastel lavender for the edges */
+  --text-color: #5d4a66; /* Deep muted purple (instead of brown) */
+  --box-bg: #ffffff;
+  --box-border: #e2d9f3; /* Pastel purple for borders */
+  --primary-color: #ffc4c4; /* Soft pastel pink */
+  --secondary-color: #dcd6f7; /* Pastel purple */
+  --tertiary-color: #b5ead7; /* Pastel mint green */
+  --btn-hover: #f3e8ff;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'VT323', monospace;
+  color: var(--text-color);
+  
+  /* Background with Parallax and Vignette Depth */
+  background-image: 
+    linear-gradient(var(--box-bg) 2px, transparent 2px),
+    linear-gradient(90deg, var(--box-bg) 2px, transparent 2px),
+    linear-gradient(rgba(226, 217, 243, 0.5) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(226, 217, 243, 0.5) 1px, transparent 1px),
+    radial-gradient(circle at center, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+    
+  background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px, 100% 100%;
+  background-position: -2px -2px, -2px -2px, -1px -1px, -1px -1px, 0 0;
+  background-attachment: fixed; /* This is the secret for depth! */
+  
+  overflow-x: hidden;
+  font-size: 24px;
+}
+
+/* Screens */
+.screen {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.screen.hidden {
+  display: none !important;
+}
+
+/* Envelope Screen */
+.envelope-container {
+  position: relative;
+  width: 300px;
+  height: 200px;
+  background-color: #fdf1f4; /* soft pinkish-white envelope */
+  border: 4px solid var(--text-color);
+  cursor: pointer;
+  transition: transform 0.3s;
+  box-shadow: 8px 8px 0px rgba(93, 74, 102, 0.15);
+  margin-top: -50px;
+}
+.envelope-container:hover {
+  transform: translateY(-5px);
+}
+.envelope-flap {
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  width: 0;
+  height: 0;
+  border-left: 150px solid transparent;
+  border-right: 150px solid transparent;
+  border-top: 110px solid var(--primary-color);
+  z-index: 3;
+  transform-origin: top;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+/* A small pixel outline for the flap */
+.envelope-flap::after {
+  content: '';
+  position: absolute;
+  top: -110px;
+  left: -150px;
+  border-left: 150px solid transparent;
+  border-right: 150px solid transparent;
+  border-top: 110px solid var(--text-color);
+  z-index: -1;
+  transform: translateY(-4px) scale(1.05);
+}
+
+.envelope-body {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+.envelope-front-left {
+  position: absolute;
+  bottom: -4px;
+  left: -4px;
+  width: 0;
+  height: 0;
+  border-left: 150px solid var(--secondary-color);
+  border-top: 100px solid transparent;
+  border-bottom: 100px solid var(--secondary-color);
+  z-index: 4;
+  pointer-events: none;
+}
+.envelope-front-right {
+  position: absolute;
+  bottom: -4px;
+  right: -4px;
+  width: 0;
+  height: 0;
+  border-right: 150px solid #c7ceea; /* slightly darker pastel purple */
+  border-top: 100px solid transparent;
+  border-bottom: 100px solid #c7ceea;
+  z-index: 4;
+  pointer-events: none;
+}
+
+.open .envelope-flap {
+  transform: rotateX(180deg);
+  z-index: 0;
+}
+
+.click-instruction {
+  margin-top: 50px;
+  animation: blink 1.5s infinite;
+  background: var(--box-bg);
+  padding: 8px 16px;
+  border: 4px solid var(--text-color);
+  box-shadow: 4px 4px 0px rgba(93, 74, 102, 0.15);
+}
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* Timeline */
+.timeline {
+  width: 100%;
+  max-width: 800px;
+  padding: 100px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 150px;
+}
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s ease-out;
+}
+.scroll-reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.timeline-item {
+  display: flex;
+  align-items: center;
+  gap: 50px;
+  width: 100%;
+}
+.layout-left {
+  flex-direction: row;
+}
+.layout-right {
+  flex-direction: row;
+}
+.layout-center {
+  flex-direction: column;
+  text-align: center;
+  gap: 30px;
+}
+
+@media (max-width: 768px) {
+  .timeline-item {
+    flex-direction: column !important;
+    text-align: center;
+  }
+}
+
+/* Photo Frames */
+.photo-frame {
+  flex-shrink: 0;
+  width: 250px;
+  height: 250px;
+  background-color: #fff;
+  border: 8px solid var(--box-bg);
+  outline: 4px solid var(--text-color);
+  box-shadow: 10px 10px 0px rgba(93, 74, 102, 0.15);
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transform: rotate(-3deg);
+  transition: transform 0.3s;
+}
+.layout-right .photo-frame {
+  transform: rotate(3deg);
+}
+.photo-frame:hover {
+  transform: rotate(0) scale(1.05);
+}
+.photo-placeholder {
+  width: 100%;
+  height: 100%;
+  background-color: var(--secondary-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-color);
+  font-size: 20px;
+  text-align: center;
+  padding: 20px;
+}
+.photo-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  background-color: #fdfaf6; /* Soft warm cream background for any empty spaces */
+}
+
+/* Final Block */
+.large-frame {
+  width: 320px;
+  height: 320px;
+  transform: rotate(0);
+}
+.special-box {
+  background-color: var(--primary-color);
+  border-color: var(--text-color);
+  font-size: 28px;
+  box-shadow: 12px 12px 0px rgba(93, 74, 102, 0.2);
+}
+.special-box::before {
+  border-color: rgba(93, 74, 102, 0.4);
+}
+
+/* Letter Boxes */
+.letter-box {
+  background-color: var(--box-bg);
+  border: 4px solid var(--text-color);
+  padding: 30px;
+  box-shadow: 8px 8px 0px rgba(93, 74, 102, 0.15);
+  line-height: 1.6;
+  text-align: left;
+  position: relative;
+  flex-grow: 1;
+  min-height: 120px;
+}
+@media (max-width: 768px) {
+  .letter-box {
+    text-align: center;
+  }
+}
+
+
+
+/* Partículas Background */
+#tsparticles {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Progress Bar */
+.progress-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 8px;
+  background-color: var(--box-bg);
+  border-bottom: 2px solid var(--text-color);
+  z-index: 1000;
+  display: none;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+.progress-container.visible {
+  display: block;
+}
+.progress-container.fade-in {
+  opacity: 1;
+}
+.progress-bar {
+  height: 100%;
+  background-color: var(--primary-color);
+  width: 0%;
+  transition: width 0.1s;
+}
+
+.hidden-fade {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 1s ease;
+}
+.hidden-fade.visible {
+  opacity: 1;
+  pointer-events: auto;
+}

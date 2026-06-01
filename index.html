@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para ti...</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+
+    <!-- Librerías Externas -->
+    <!-- tsParticles -->
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.12.0/tsparticles.bundle.min.js"></script>
+    <!-- TypeIt -->
+    <script src="https://unpkg.com/typeit@8.8.3/dist/index.umd.js"></script>
+</head>
+
+<body>
+
+    <!-- Fondo de Partículas -->
+    <div id="tsparticles"></div>
+
+    <!-- Pantalla inicial del sobre -->
+    <div id="envelope-screen" class="screen active">
+        <div class="envelope-container" id="envelope">
+            <div class="envelope-flap"></div>
+            <div class="envelope-body">
+                <div class="pixel-heart-icon"></div>
+            </div>
+            <div class="envelope-front-left"></div>
+            <div class="envelope-front-right"></div>
+        </div>
+        <p class="click-instruction">Haz clic en el sobre para abrir</p>
+    </div>
+
+    <!-- Barra de progreso -->
+    <div class="progress-container" id="progress-container">
+        <div class="progress-bar" id="progress-bar"></div>
+    </div>
+
+    <!-- Contenedor principal de la carta -->
+    <div id="letter-screen" class="screen hidden">
+        <div class="timeline">
+
+            <!-- Bloque 1 (Izquierda) -->
+            <div class="timeline-item scroll-reveal layout-left">
+                <div class="photo-frame">
+                    <img src="imagenes/imagen1.jpeg" alt="Foto 1">
+                </div>
+                <div class="letter-box">
+                    <p id="typeit-1"></p>
+                </div>
+            </div>
+
+            <!-- Bloque 2 (Derecha) -->
+            <div class="timeline-item scroll-reveal layout-right">
+                <div class="letter-box">
+                    <p id="typeit-2"></p>
+                </div>
+                <div class="photo-frame">
+                    <img src="imagenes/imagen2.jpeg" alt="Foto 2">
+                </div>
+            </div>
+
+            <!-- Bloque 3 (Izquierda) -->
+            <div class="timeline-item scroll-reveal layout-left">
+                <div class="photo-frame">
+                    <img src="imagenes/imagen3.jpeg" alt="Foto 3">
+                </div>
+                <div class="letter-box">
+                    <p id="typeit-3"></p>
+                </div>
+            </div>
+
+            <!-- Bloque 4 (Derecha) -->
+            <div class="timeline-item scroll-reveal layout-right">
+                <div class="letter-box">
+                    <p id="typeit-4"></p>
+                </div>
+                <div class="photo-frame">
+                    <img src="imagenes/imagen4.jpeg" alt="Foto 4">
+                </div>
+            </div>
+
+            <!-- Bloque 5 (Izquierda) -->
+            <div class="timeline-item scroll-reveal layout-left">
+                <div class="photo-frame">
+                    <img src="imagenes/imagen5.jpeg" alt="Foto 5">
+                </div>
+                <div class="letter-box">
+                    <p id="typeit-5"></p>
+                </div>
+            </div>
+
+            <!-- Gran Final (Centro) -->
+            <div class="timeline-item scroll-reveal layout-center final-block">
+                <div class="photo-frame large-frame">
+                    <img src="imagenes/imagen6.jpeg" alt="Foto Final">
+                </div>
+                <div class="letter-box special-box">
+                    <p id="typeit-6"></p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
